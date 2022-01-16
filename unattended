@@ -5,13 +5,9 @@ mount / -o remount,rw
 sed -i 's| init=.*||' /boot/cmdline.txt
 
 # 2. THE USEFUL PART OF THE SCRIPT
-[[ -d /boot/payload/home/pi ]] && sudo -u pi cp --preserve=timestamps -r\
- /boot/payload/home/pi /home/ && rm -rf /boot/payload/home/pi
-[[ -d /boot/payload ]] && cp --preserve=timestamps -r /boot/payload/* /\
- && rm -rf /boot/payload
-[[ -f /lib/systemd/system/one-time-script.service ]] && ln -s\
- /lib/systemd/system/one-time-script.service\
- /etc/systemd/system/multi-user.target.wants/
+/usr/bin/raspi-config nonint do_change_timezone America/Chicago
+apt -y install python3-pip python3-bs4 virtualenv neovim screen
+echo "/dev/sda1	/usb	ext4	defaults	0	0" >> /etc/fstab
 
 # 3. CLEANING UP AND REBOOTING
 sync
